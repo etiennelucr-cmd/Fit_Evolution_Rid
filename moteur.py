@@ -1,9 +1,8 @@
 import json
-import sqlite3
 from datetime import date, timedelta, datetime
 from pathlib import Path
 
-DB = Path(__file__).with_name('fit_evolution.db')
+
 LEVELS = ['Débutant', 'Intermédiaire', 'Avancé']
 EXERCISES = {
  'Pompes': {'beginner':'Pompes contre un mur','intermediate':'Pompes sur les genoux','advanced':'Pompes classiques','unit':'reps'},
@@ -36,11 +35,7 @@ MEALS = {
   ('Yaourt soja, muesli et fruits','Curry de lentilles et riz','Soupe de haricots et pain complet')]
 }
 
-def connect():
- c=sqlite3.connect(DB)
- c.row_factory=sqlite3.Row
- c.execute('PRAGMA foreign_keys=ON')
- return c
+from cloud_db import connect
 
 def init():
  with connect() as c:
