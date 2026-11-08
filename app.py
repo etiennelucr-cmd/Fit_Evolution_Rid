@@ -15,10 +15,9 @@ import planning_plus as pp
 import bilan_hebdo as bh
 import guide_2d
 import seance_libre as sl
-j.init()
-
 st.set_page_config(page_title='Fit Evolution V6.1',page_icon='🦇',layout='wide',initial_sidebar_state='expanded')
 security.require_login()
+j.init()
 c.init()
 st.markdown(dash.STYLE,unsafe_allow_html=True)
 NAV=['🏠 Tableau de bord','👤 Profil & objectifs','📅 Programme','🏋️ Séance guidée','🥗 Nutrition','🍎 Journal alimentaire & pas','🔎 Scanner & aliments','📊 Progression','🏆 Motivation','📚 Exercices','📻 Gotham Radio','📱 iPhone & PC','📈 Bilan coach','🗓️ Calendrier & rappels','👟 Objectifs de pas','✨ Encouragements','🥑 Macros & bilan 30 jours','📋 Mon bilan hebdomadaire']
@@ -40,7 +39,7 @@ with st.sidebar:
  if len(pages)>1:
   page=st.radio('Pages',pages,key='fe_page_'+group,label_visibility='collapsed')
  else:page=pages[0]
- st.markdown('<div class="sidebar-footer">💪 Un jour après l’autre.<br>📱 iPhone + PC · SQLite local</div>',unsafe_allow_html=True)
+ st.markdown('<div class="sidebar-footer">💪 Un jour après l’autre.<br>📱 iPhone + PC · PostgreSQL Supabase</div>',unsafe_allow_html=True)
  if st.button('🔒 Déconnexion',use_container_width=True):
   st.session_state.pop('authenticated',None);st.rerun()
 dash.header()

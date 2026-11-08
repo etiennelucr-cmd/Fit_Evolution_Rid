@@ -32,10 +32,14 @@ class Connection:
             if stmt.strip(): self.execute(stmt)
     def execute(self, sql, params=()):
         sql=sql.strip()
+        if self.raw.execute('SELECT current_schema()').fetchone()['current_schema'] != 'fit_evolution':
+            raise RuntimeError('Connexion hors du schéma fit_evolution : opération refusée.')
+        if re.search(r'(?i)\b(?:SET\s+(?:LOCAL\s+)?search_path|CREATE\s+SCHEMA|DROP\s+SCHEMA|ALTER\s+SCHEMA|(?:public|auth|storage)\s*\.)', sql):
+            raise RuntimeError('Requête hors du schéma fit_evolution refusée.')
         if sql.upper().startswith('PRAGMA '): return Cursor(self.raw.execute('SELECT 1'))
         # Keep fixed or externally referenced identifiers non-serial.
         # Other SQLite integer primary keys require generated IDs in PostgreSQL.
-        if re.match(r'CREATE\s+TABLE\s+IF\s+NOT\s+EXISTS\s+(?:profile|goals|calories)\b', sql, re.I):
+        if re.match(r'CREATE\s+TABLE\s+IF\s+NOT\s+EXISTS\s+(?:profile|goals|calories|food_macros|weight_goal)\b', sql, re.I):
             sql=re.sub(r'\bINTEGER PRIMARY KEY\b', 'INTEGER PRIMARY KEY', sql, flags=re.I)
         else:
             sql=re.sub(r'\bINTEGER PRIMARY KEY(?: AUTOINCREMENT)?\b', 'BIGSERIAL PRIMARY KEY', sql, flags=re.I)
@@ -47,7 +51,7 @@ class Connection:
         sql=re.sub(r'(?<![\w])\?', '%s',sql)
         # Psycopg uses double quotes for identifiers, never for string values.
         sql=sql.replace('status="done"',"status='done'")
-        if re.match(r'INSERT INTO (programs|food_log)\b',sql,re.I) and 'RETURNING' not in sql.upper():
+        if re.match(r'INSERT INTO (programs|food_log|music_playlists|personal_records|measurements|adjustments|fe_reminders|free_sessions)\b',sql,re.I) and 'RETURNING' not in sql.upper():
             sql+=' RETURNING id AS _inserted_id'
         return Cursor(self.raw.execute(sql,params))
 
