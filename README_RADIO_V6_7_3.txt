@@ -1,0 +1,1 @@
+Gotham Radio V6.7.3 : choix entre radio automatique YouTube IFrame API et lecteur de secours Streamlit st.video. Le mode secours sert au diagnostic et ne gère pas l’enchaînement automatique. YouTube peut refuser l’intégration même si la vidéo fonctionne sur youtube.com.

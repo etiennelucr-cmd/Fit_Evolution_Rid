@@ -1,0 +1,4 @@
+streamlit>=1.35,<2
+Pillow>=10,<13
+zxing-cpp>=2.2,<4
+streamlit-image-coordinates>=0.1.9,<1

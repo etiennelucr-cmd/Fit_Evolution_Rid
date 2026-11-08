@@ -1,0 +1,12 @@
+CORRECTIF AttributeError: module journal has no attribute set_food_macros
+
+1. Fermer Fit Evolution et sa fenêtre de lancement.
+2. Sauvegarder fit_evolution.db.
+3. Copier journal.py dans C:\Users\LUCPRO\OneDrive\Documents\Fit_Evolution_V5\ (à côté de app.py).
+4. Accepter le remplacement de journal.py, sans remplacer app.py ni la base de données.
+5. Relancer Fit Evolution.
+
+Ce correctif ajoute set_food_macros et references, compatibles avec les appels de app.py.
+Les valeurs doivent être saisies PAR PORTION DE REFERENCE : pour un produit à 341 kcal/100 g enregistré en quantité 0,25, saisir les macros pour 100 g, et non pour 25 g.
+Chorizo doux (étiquette fournie) : protéines 24 g, glucides 1,8 g, lipides 26 g. Le journal calcule automatiquement 6 g, 0,45 g, 6,5 g pour 25 g.
+Aucune donnée personnelle n'est incluse dans ce ZIP.

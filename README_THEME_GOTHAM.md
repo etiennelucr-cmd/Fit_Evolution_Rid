@@ -1,0 +1,1 @@
+Thème Gotham 1989 : palette noir/anthracite/jaune, interface responsive, sidebar, cartes et en-tête. Cette version est une adaptation visuelle ; le mannequin Batman interactif et la séance libre ne sont pas encore implémentés.

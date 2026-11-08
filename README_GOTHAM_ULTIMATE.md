@@ -1,0 +1,1 @@
+Gotham Ultimate — correctifs de présentation : thème sombre natif, tableau Programme sombre, graphique Altair sombre, cartes des prochaines séances, contrôles et résumé Séance libre. La silhouette est illustrative, pas un modèle 3D interactif. Les données SQLite sont conservées. Tester sur PC et iPhone.

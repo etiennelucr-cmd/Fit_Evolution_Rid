@@ -1,0 +1,1 @@
+V6.7.4 — Séance libre : coach 3D animé et chronomètre réutilisant le moteur de la séance guidée. Démarrer/Pause/Suivant/Recommencer, bips, voix et récupération. Enregistrement SQLite existant conservé. Les animations 3D sont indicatives et nécessitent Three.js accessible en ligne. Le temps réel doit être saisi lors de l’enregistrement.
