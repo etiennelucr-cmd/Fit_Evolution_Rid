@@ -57,14 +57,39 @@ class Connection:
 
 def connect():
     if 'postgres' not in st.secrets:
-        raise RuntimeError('Configurer [postgres] dans les secrets Streamlit Cloud avant de lancer Fit Evolution.')
-    cfg=st.secrets['postgres']
-    raw=pg_connect(host=cfg['host'],port=int(cfg.get('port',5432)),dbname=cfg.get('dbname','postgres'),
-                   user=cfg['user'],password=cfg['password'],sslmode='require',connect_timeout=12,
-                   raw.execute("SET search_path TO fit_evolution")
-    # Fail closed: never execute application SQL in the public schema.
-    active = raw.execute('SELECT current_schema() AS schema').fetchone()['schema']
-    if active != 'fit_evolution':
+        raise RuntimeError(
+            'Configurer [postgres] dans les secrets Streamlit Cloud avant de lancer Fit Evolution.'
+        )
+
+    cfg = st.secrets['postgres']
+
+    raw = pg_connect(
+        host=cfg['host'],
+        port=int(cfg.get('port', 5432)),
+        dbname=cfg.get('dbname', 'postgres'),
+        user=cfg['user'],
+        password=cfg['password'],
+        sslmode='require',
+        connect_timeout=12,
+        row_factory=dict_row
+    )
+
+    try:
+        raw.execute("SET search_path TO fit_evolution")
+
+        active = raw.execute(
+            "SELECT current_schema() AS schema"
+        ).fetchone()['schema']
+
+        if active != 'fit_evolution':
+            raise RuntimeError(
+                'Schéma fit_evolution absent ou inaccessible. '
+                'Connexion refusée pour protéger les autres applications.'
+            )
+
+        return Connection(raw)
+
+    except Exception:
         raw.close()
-        raise RuntimeError('Schéma fit_evolution absent ou inaccessible. Créez-le dans Supabase avant de lancer l’application.')
+        raise
     return Connection(raw)
