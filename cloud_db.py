@@ -61,7 +61,7 @@ def connect():
     cfg=st.secrets['postgres']
     raw=pg_connect(host=cfg['host'],port=int(cfg.get('port',5432)),dbname=cfg.get('dbname','postgres'),
                    user=cfg['user'],password=cfg['password'],sslmode='require',connect_timeout=12,
-                   options='-csearch_path=fit_evolution',row_factory=dict_row)
+                   raw.execute("SET search_path TO fit_evolution")
     # Fail closed: never execute application SQL in the public schema.
     active = raw.execute('SELECT current_schema() AS schema').fetchone()['schema']
     if active != 'fit_evolution':
